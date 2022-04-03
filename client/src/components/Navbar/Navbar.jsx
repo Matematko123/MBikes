@@ -1,9 +1,13 @@
+// @ts-nocheck
+import React from 'react';
 import styled from 'styled-components';
-import Slider from 'react-slick';
 
 import { FaShoppingCart } from 'react-icons/fa';
 import { BsPersonFill } from 'react-icons/bs';
-import React from 'react';
+import { Badge } from '@material-ui/core';
+
+import { HashLink as Link } from 'react-router-hash-link';
+import { useSelector } from 'react-redux';
 
 const Container = styled.div`
   padding: 2rem 0rem;
@@ -76,23 +80,29 @@ const Links = styled.div`
     align-items: center;
     gap: 1rem;
   }
+
+  .badge span {
+    font-size: 1rem;
+    font-weight: bold;
+  }
 `;
 
 function Navbar() {
+  const quantity = useSelector((state) => state.cart.quantity);
   return (
     <Container>
       <Wrapper>
-        <Left>MBikes</Left>
+        <Link to="/">
+          <Left>MBikes</Left>
+        </Link>
         <Right>
           <Links>
-            <a href="#Bikes">Bikes</a>
-            <a href="#AboutUs">About Us</a>
-            <a href="">
-              <BsPersonFill />
-            </a>
-            <a href="">
+            <Link to="/#Bikes">Bikes</Link>
+            <Link to="/#AboutUs">About Us</Link>
+            <BsPersonFill />
+            <Badge className="badge" badgeContent={quantity} color="primary">
               <FaShoppingCart />
-            </a>
+            </Badge>
           </Links>
         </Right>
       </Wrapper>

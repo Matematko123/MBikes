@@ -104,8 +104,10 @@ function BikeSlider() {
             the environment.
           </p>
           <Buttons>
-            <PrimaryButton>Shop now</PrimaryButton>
-            <a href="">Learn More</a>
+            <a href="#Bikes">
+              <PrimaryButton>Shop now</PrimaryButton>
+            </a>
+            <a href="#AboutUs">Learn More</a>
           </Buttons>
         </Left>
         <Right>

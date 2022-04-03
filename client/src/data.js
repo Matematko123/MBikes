@@ -7,16 +7,19 @@ export const categories = [
     id: 1,
     img: bike1,
     title: '29er',
+    cat: '29er',
   },
   {
     id: 2,
     img: bike2,
     title: '27.5er',
+    cat: '27.5er',
   },
   {
     id: 3,
     img: bike3,
     title: '26er',
+    cat: '26er',
   },
 ];
 

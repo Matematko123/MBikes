@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useLocation } from 'react-router-dom';
+
 import styled from 'styled-components';
 
 import Navbar from '../components/Navbar/Navbar';
@@ -39,30 +41,40 @@ const Option = styled.option`
 `;
 
 export default function ProductListPage() {
+  const location = useLocation();
+  const category = location.pathname.split('/')[2];
+
+  const [filters, setFilters] = useState({});
+  const [sort, setSort] = useState('newest');
+
+  const handleFilters = (event) => {
+    const value = event.target.value;
+    setFilters({
+      ...filters,
+      [event.target.name]: value,
+    });
+  };
+
   return (
     <Container>
       <Navbar></Navbar>
-      <Products>
+      <Products category={category} filters={filters} sort={sort}>
         <FilterContainer>
           <Filter>
             <FilterText> Filter Products: </FilterText>
-            <Select>
-              <Option disabled selected>
-                Tyre size
-              </Option>
-              <Option>29er</Option>
-              <Option>27.5er</Option>
-              <Option>26er</Option>
+            <Select name="travel" onChange={handleFilters}>
+              <Option disabled>Travel</Option>
+              <Option>100mm</Option>
+              <Option>120mm</Option>
+              <Option>140mm</Option>
             </Select>
           </Filter>
           <Filter>
             <FilterText> Sort Products: </FilterText>
-            <Select>
-              <Option disabled selected>
-                Price
-              </Option>
-              <Option>Highest first</Option>
-              <Option>Lowest first</Option>
+            <Select onChange={(e) => setSort(e.target.value)}>
+              <Option value="newest">Newest</Option>
+              <Option value="asc">Highest price first</Option>
+              <Option value="desc">Lowest price first</Option>
             </Select>
           </Filter>
         </FilterContainer>

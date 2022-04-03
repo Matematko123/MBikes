@@ -13,7 +13,12 @@ function HomePage() {
       <Navbar></Navbar>
       <BikeSlider></BikeSlider>
       <Categories></Categories>
-      <Products></Products>
+      <Products
+        children={undefined}
+        category={undefined}
+        filters={undefined}
+        sort={undefined}
+      />
       <AboutUs></AboutUs>
       <Footer></Footer>
     </>

@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import { Link } from 'react-router-dom';
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -11,6 +13,7 @@ const Container = styled.div`
 
   justify-content: center;
   align-items: center;
+  text-decoration: 'none';
 `;
 
 const Button = styled.button`
@@ -39,11 +42,13 @@ const Button = styled.button`
 
 function CategoryItem({ item }) {
   return (
-    <Container>
-      <img src={item.img} alt="" />
-      <span>{item.title}</span>
-      <Button>Shop Now</Button>
-    </Container>
+    <Link to={`/products/${item.cat}`}>
+      <Container>
+        <img src={item.img} alt="" />
+        <span>{item.title}</span>
+        <Button>Shop Now</Button>
+      </Container>
+    </Link>
   );
 }
 

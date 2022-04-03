@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 import { FaShoppingCart, FaSearch, FaHeart } from 'react-icons/fa';
+import { Link, useLocation } from 'react-router-dom';
 
 const Info = styled.div`
   opacity: 0;
@@ -50,6 +51,10 @@ const Container = styled.div`
     width: 100%;
     z-index: 2;
   }
+
+  * {
+    color: var(--text);
+  }
 `;
 
 const Icon = styled.div`
@@ -88,15 +93,19 @@ function Product({ item }) {
         <Icon>
           <FaShoppingCart></FaShoppingCart>
         </Icon>
-        <Icon>
-          <FaSearch></FaSearch>
-        </Icon>
+        <Link to={`/product/${item._id}`} style={{ textDecoration: 'none' }}>
+          <Icon>
+            <FaSearch></FaSearch>
+          </Icon>
+        </Link>
         <Icon>
           <FaHeart></FaHeart>
         </Icon>
       </Info>
-      <BikeName>V10</BikeName>
-      <BikeDesc>Travel: 215mm | Wheel Size: 27.5", MX, 29"</BikeDesc>
+      <BikeName>{item.title}</BikeName>
+      <BikeDesc>
+        Travel: {item.travel} | Wheel Size: {item.wheel} | {item.price} $
+      </BikeDesc>
     </Container>
   );
 }

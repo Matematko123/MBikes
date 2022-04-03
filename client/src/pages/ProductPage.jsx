@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import Navbar from '../components/Navbar/Navbar';
@@ -6,6 +6,12 @@ import Footer from '../components/Footer/Footer';
 import SecondaryButton from 'reusable/SecondaryButton';
 
 import bike1 from '../img/bike1.webp';
+
+import { publicRequest } from '../requestMethods.js';
+import { useLocation } from 'react-router-dom';
+
+import { addProduct } from '../redux/cartRedux';
+import { useDispatch } from 'react-redux';
 
 const Container = styled.div`
   position: relative;
@@ -119,30 +125,62 @@ const Price = styled.div`
 `;
 
 export default function ProductPage() {
+  const location = useLocation();
+  const id = location.pathname.split('/')[2];
+  const dispatch = useDispatch();
+
+  const [product, setProduct] = useState({
+    title: 'sample',
+    img: bike1,
+    battery: 'test',
+    speed: 'test',
+    weight: 'test',
+    wheel: 'test',
+    travel: 'test',
+    desc: 'test',
+    price: 'test',
+  });
+
+  useEffect(() => {
+    async function getProduct() {
+      try {
+        const res = await publicRequest.get('/products/find/' + id);
+        setProduct(res.data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    getProduct();
+  }, []);
+
+  const handleCartButton = () => {
+    dispatch(addProduct({ product, price: product.price }));
+  };
+
   return (
     <Container>
       <Navbar></Navbar>
       <Wrapper>
         <Left>
-          <h2>Santa Cruz Nomad</h2>
-          <img src={bike1} alt="" />
+          <h2>{product.title}</h2>
+          <img src={product.img} alt="" />
           <Stats>
             <Text>
               <TextBlock>
                 <h4>Battery range</h4>
-                <span>22 miles</span>
+                <span>{product.battery} miles</span>
               </TextBlock>
               <TextBlock>
                 <h4>Charging time</h4>
-                <span>2H</span>
+                <span>{product.battery}</span>
               </TextBlock>
               <TextBlock>
                 <h4>Assist speed</h4>
-                <span>32 kmph</span>
+                <span>{product.speed} kmph</span>
               </TextBlock>
               <TextBlock>
                 <h4>Weight</h4>
-                <span>10 kg</span>
+                <span>{product.weight} kg</span>
               </TextBlock>
             </Text>
           </Stats>
@@ -153,26 +191,24 @@ export default function ProductPage() {
             <b>Available in:</b> <br /> Carbon CC
           </span>
           <span>
-            <b>Wheel Size:</b> <br /> MX
+            <b>Wheel Size:</b> <br /> {product.wheel}
           </span>
           <span>
-            <b>Top Speed:</b> <br /> 50 kmph
+            <b>Top Speed:</b> <br /> {product.speed} kmph
           </span>
           <span>
-            <b>Battery life:</b> <br /> 2H
+            <b>Battery life:</b> <br /> {product.battery}
           </span>
           <span>
-            <b>Front Travel:</b> <br /> 170mm
+            <b>Front Travel:</b> <br /> {product.travel}
           </span>
           <span>
-            <b>Description:</b> <br /> The Bullit is an electric mountain bike
-            designed for tackling the steepest and deepest of trails in both
-            directions. Imagine the kinds of rooty, rocky, horror fests usually
-            reserved for our biggest hitting bikes like the Nomad and Megatower.
-            Then imagine what lies beyond that.
+            <b>Description:</b> <br /> {product.desc}
           </span>
-          <Price>$ 1999</Price>
-          <SecondaryButton>Add to Cart</SecondaryButton>
+          <Price>$ {product.price}</Price>
+          <SecondaryButton onClick={handleCartButton}>
+            Add to Cart
+          </SecondaryButton>
         </Right>
       </Wrapper>
       <Footer></Footer>

@@ -20,7 +20,7 @@ const Button = styled.button`
 `;
 
 function SecondaryButton(props) {
-  return <Button>{props.children}</Button>;
+  return <Button onClick={props.onClick}>{props.children}</Button>;
 }
 
 export default SecondaryButton;
