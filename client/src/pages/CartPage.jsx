@@ -186,7 +186,6 @@ export default function CartPage() {
     stripeToken && setOrderDone(true);
 
     async function addOrder() {
-      console.log(stripeToken);
       publicRequest.post('/orders/', {
         name: stripeToken.card.name,
         email: stripeToken.email,
