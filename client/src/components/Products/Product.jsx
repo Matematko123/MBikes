@@ -3,6 +3,8 @@ import styled from 'styled-components';
 
 import { FaShoppingCart, FaSearch, FaHeart } from 'react-icons/fa';
 import { Link, useLocation } from 'react-router-dom';
+import { addProduct } from '../../redux/cartRedux';
+import { useDispatch } from 'react-redux';
 
 const Info = styled.div`
   opacity: 0;
@@ -86,11 +88,17 @@ const BikeDesc = styled.span`
 `;
 
 function Product({ item }) {
+  const dispatch = useDispatch();
+
+  function addToCartHandler() {
+    dispatch(addProduct({ product: item, price: item.price }));
+  }
+
   return (
     <Container>
       <img src={item.img} alt="" />
       <Info>
-        <Icon>
+        <Icon onClick={addToCartHandler}>
           <FaShoppingCart></FaShoppingCart>
         </Icon>
         <Link to={`/product/${item._id}`} style={{ textDecoration: 'none' }}>

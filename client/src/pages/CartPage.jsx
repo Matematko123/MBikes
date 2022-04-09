@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import Navbar from '../components/Navbar/Navbar';
@@ -6,7 +6,15 @@ import Footer from '../components/Footer/Footer';
 
 import SecondaryButton from 'reusable/SecondaryButton';
 
-import img from '../img/bike1.webp';
+import { useSelector, useDispatch } from 'react-redux';
+import { removeProduct, clearAllProducts } from '../redux/cartRedux';
+import { HashLink as Link } from 'react-router-hash-link';
+
+import { useNavigate } from 'react-router-dom';
+
+import StripeCheckout from 'react-stripe-checkout';
+
+const KEY = process.env.REACT_APP_STRIPE;
 
 const Container = styled.div`
   height: 110vh;
@@ -46,6 +54,12 @@ const Wrapper = styled.div`
 
   span {
     font-size: 1.6rem;
+  }
+
+  a {
+    text-decoration: none;
+    color: black;
+    text-align: center;
   }
 `;
 
@@ -140,17 +154,6 @@ const CartFooter = styled.div`
   }
 `;
 
-const ProductQuantity = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-
-  span {
-    text-align: center;
-  }
-`;
-
 const Estimates = styled.div`
   display: flex;
   justify-content: space-between;
@@ -163,63 +166,86 @@ const Estimates = styled.div`
 `;
 
 export default function CartPage() {
+  // @ts-ignore
+  const cart = useSelector((state) => state.cart);
+  const [stripeToken, setStripeToken] = useState(null);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  function removeItemFromCart(product) {
+    dispatch(removeProduct({ product, price: product.price }));
+  }
+
+  function onToken(token) {
+    setStripeToken(token);
+  }
+
+  useEffect(() => {
+    stripeToken && navigate('/');
+    stripeToken && dispatch(clearAllProducts());
+  }, [stripeToken]);
+
   return (
     <Container>
       <Navbar></Navbar>
       <Wrapper>
         <h2>Cart</h2>
-        <ContinueShopping>Continue Shopping</ContinueShopping>
-        <CartItemsHeader>
-          <span>Image</span>
-          <span>Description</span>
-          <span>Wheel Size</span>
-          <span>Quantity</span>
-          <span>Remove</span>
-          <span>Price</span>
-        </CartItemsHeader>
-        <CartItems>
-          <CartItem>
-            <img src={img} alt="" />
-            <CartDesc>
-              <span>Sample Bike</span>
-              <span>ID: 00032324</span>
-            </CartDesc>
-            <span>29er</span>
-            <ProductQuantity>
-              <SecondaryButton>+</SecondaryButton>
-              <span>1</span>
-              <SecondaryButton>-</SecondaryButton>
-            </ProductQuantity>
-            <SecondaryButton>x</SecondaryButton>
-            <span>$1000</span>
-          </CartItem>
-          <hr />
-          <CartItem>
-            <img src={img} alt="" />
-            <CartDesc>
-              <span>Sample Bike</span>
-              <span>ID: 00032324</span>
-            </CartDesc>
-            <span>29er</span>
-            <ProductQuantity>
-              <SecondaryButton>+</SecondaryButton>
-              <span>1</span>
-              <SecondaryButton>-</SecondaryButton>
-            </ProductQuantity>
-            <SecondaryButton>x</SecondaryButton>
-            <span>$1000</span>
-          </CartItem>
-          <hr />
-        </CartItems>
-        <CartFooter>
-          <Estimates>
-            <span>Subtotal: $2000</span>
-            <span>Estimated Shipping: $10</span>
-            <span>Shipping Discount: $0</span>
-            <span>Total: $2010</span>
-          </Estimates>
-          <SecondaryButton>Checkout</SecondaryButton>
-        </CartFooter>
+        <Link to="/#Bikes">
+          <ContinueShopping>Continue Shopping</ContinueShopping>
+        </Link>
+        {cart.products.length ? (
+          <>
+            <CartItemsHeader>
+              <span>Image</span>
+              <span>Description</span>
+              <span>Wheel Size</span>
+              <span>Remove</span>
+              <span>Price</span>
+            </CartItemsHeader>
+            <CartItems>
+              {cart.products.map((product) => (
+                <>
+                  <CartItem>
+                    <img src={product.img} alt="" />
+                    <CartDesc>
+                      <span>{product.title}</span>
+                      <span>ID: {product._id}</span>
+                    </CartDesc>
+                    <span>{product.wheel}</span>
+
+                    <SecondaryButton
+                      onClick={() => removeItemFromCart(product)}
+                    >
+                      x
+                    </SecondaryButton>
+                    <span>{product.price}$</span>
+                  </CartItem>
+                  <hr />
+                </>
+              ))}
+            </CartItems>
+            <CartFooter>
+              <Estimates>
+                <span>Subtotal: ${cart.total}</span>
+                <span>Estimated Shipping: $50</span>
+                <span>Shipping Discount: $0</span>
+                <span>Total: ${cart.total + 50}</span>
+              </Estimates>
+              <StripeCheckout
+                shippingAddress
+                name="MBikes"
+                description={`Your total is $${cart.total + 50}`}
+                amount={(cart.total + 50) * 100}
+                token={onToken}
+                stripeKey={KEY}
+              >
+                <SecondaryButton>Checkout</SecondaryButton>
+              </StripeCheckout>
+            </CartFooter>
+          </>
+        ) : (
+          <h2> Add something to cart!</h2>
+        )}
       </Wrapper>
       <Footer></Footer>
     </Container>

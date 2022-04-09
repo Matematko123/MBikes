@@ -100,9 +100,11 @@ function Navbar() {
             <Link to="/#Bikes">Bikes</Link>
             <Link to="/#AboutUs">About Us</Link>
             <BsPersonFill />
-            <Badge className="badge" badgeContent={quantity} color="primary">
-              <FaShoppingCart />
-            </Badge>
+            <Link to="/cart">
+              <Badge className="badge" badgeContent={quantity} color="primary">
+                <FaShoppingCart />
+              </Badge>
+            </Link>
           </Links>
         </Right>
       </Wrapper>
