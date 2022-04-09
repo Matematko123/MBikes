@@ -12,7 +12,9 @@ import React from 'react';
 
 const Container = styled.div`
   width: 100%;
-  height: 100vh;
+  margin-bottom: 15rem;
+  @media (max-width: 768px) {
+  }
 `;
 const Wrapper = styled.div`
   width: 85%;
@@ -127,7 +129,7 @@ function BikeSlider() {
               weight={'20'}
             ></BikeSelector>
             <BikeSelector
-              img={bike3}
+              img="https://www.santacruzbicycles.com/_next/image?url=https%3A%2F%2Fimages.prismic.io%2Fsantacruzbikesstatic%2F07e8b7c6-3f4f-4c9e-ac0e-8badc915d465_MY22_Hightower_CC_XO1_AXS_RSV_Melon_NoDrop.png%3Fauto%3Dcompress%2Cformat&w=992&q=100"
               battery={'10 km'}
               charging={'30 min'}
               speed={'20'}

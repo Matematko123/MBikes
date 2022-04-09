@@ -27,6 +27,10 @@ const Container = styled.div`
     font-size: 2rem;
     margin-bottom: 2rem;
   }
+
+  @media (max-width: 768px) {
+    margin-top: 15rem;
+  }
 `;
 
 const List = styled.div`
@@ -34,6 +38,10 @@ const List = styled.div`
   justify-content: space-between;
   margin-top: 2rem;
   gap: 4rem;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 `;
 
 function Categories() {

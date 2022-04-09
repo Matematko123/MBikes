@@ -8,6 +8,11 @@ const Container = styled.footer`
   background-color: black;
   color: white;
   height: 6rem;
+
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
 `;
 
 const Wrapper = styled.div`

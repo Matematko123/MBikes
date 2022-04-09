@@ -7,7 +7,15 @@ import Navbar from '../components/Navbar/Navbar';
 import Products from '../components/Products/Products';
 import Footer from '../components/Footer/Footer';
 
-const Container = styled.div``;
+const Container = styled.div`
+  min-height: 100vh;
+  position: relative;
+
+  @media (max-width: 768px) {
+    height: 100%;
+    padding-bottom: 10rem;
+  }
+`;
 
 const FilterContainer = styled.div`
   display: flex;
@@ -64,9 +72,9 @@ export default function ProductListPage() {
             <FilterText> Filter Products: </FilterText>
             <Select name="travel" onChange={handleFilters}>
               <Option disabled>Travel</Option>
-              <Option>100mm</Option>
-              <Option>120mm</Option>
-              <Option>140mm</Option>
+              <Option value="100">100mm</Option>
+              <Option value="120">120mm</Option>
+              <Option value="140">140mm</Option>
             </Select>
           </Filter>
           <Filter>

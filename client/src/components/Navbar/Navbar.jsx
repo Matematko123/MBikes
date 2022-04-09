@@ -99,7 +99,7 @@ function Navbar() {
           <Links>
             <Link to="/#Bikes">Bikes</Link>
             <Link to="/#AboutUs">About Us</Link>
-            <BsPersonFill />
+            {/* <BsPersonFill /> */}
             <Link to="/cart">
               <Badge className="badge" badgeContent={quantity} color="primary">
                 <FaShoppingCart />

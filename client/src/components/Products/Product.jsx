@@ -106,9 +106,6 @@ function Product({ item }) {
             <FaSearch></FaSearch>
           </Icon>
         </Link>
-        <Icon>
-          <FaHeart></FaHeart>
-        </Icon>
       </Info>
       <BikeName>{item.title}</BikeName>
       <BikeDesc>

@@ -14,19 +14,18 @@ import { useNavigate } from 'react-router-dom';
 
 import StripeCheckout from 'react-stripe-checkout';
 
+import { publicRequest } from '../requestMethods';
+
 const KEY = process.env.REACT_APP_STRIPE;
 
 const Container = styled.div`
-  height: 110vh;
-
-  footer {
-    position: absolute;
-    bottom: -15rem;
-    width: 100%;
-  }
-
+  min-height: 100vh;
+  position: relative;
+  padding-bottom: 0rem;
   color: var(--text);
   font-weight: 500;
+
+  /* padding-bottom: 7rem; */
 
   @media (max-width: 768px) {
     height: 100%;
@@ -129,6 +128,7 @@ const CartItem = styled.div`
     }
   }
 `;
+
 const CartDesc = styled.div`
   display: flex;
   flex-direction: column;
@@ -136,7 +136,7 @@ const CartDesc = styled.div`
 
 const CartFooter = styled.div`
   text-align: right;
-
+  margin-bottom: 10rem;
   span {
     font-size: 2.2rem;
     font-weight: 600;
@@ -169,6 +169,7 @@ export default function CartPage() {
   // @ts-ignore
   const cart = useSelector((state) => state.cart);
   const [stripeToken, setStripeToken] = useState(null);
+  const [orderDone, setOrderDone] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -181,9 +182,24 @@ export default function CartPage() {
   }
 
   useEffect(() => {
-    stripeToken && navigate('/');
     stripeToken && dispatch(clearAllProducts());
+    stripeToken && setOrderDone(true);
+
+    async function addOrder() {
+      console.log(stripeToken);
+      publicRequest.post('/orders/', {
+        name: stripeToken.card.name,
+        email: stripeToken.email,
+        products: cart.products,
+        address: `${stripeToken.card.address_country}, ${stripeToken.card.address_city}, ${stripeToken.card.address_line1}`,
+      });
+    }
+    stripeToken && addOrder();
   }, [stripeToken]);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <Container>
@@ -193,6 +209,7 @@ export default function CartPage() {
         <Link to="/#Bikes">
           <ContinueShopping>Continue Shopping</ContinueShopping>
         </Link>
+
         {cart.products.length ? (
           <>
             <CartItemsHeader>
@@ -244,7 +261,14 @@ export default function CartPage() {
             </CartFooter>
           </>
         ) : (
-          <h2> Add something to cart!</h2>
+          !orderDone && <h2> Add something to cart!</h2>
+        )}
+        {orderDone && (
+          <h2>
+            Thank you for your order! <br /> <br />
+            We're processing it now. <br /> You will recieve email with delivery
+            details!
+          </h2>
         )}
       </Wrapper>
       <Footer></Footer>

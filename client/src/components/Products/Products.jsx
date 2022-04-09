@@ -95,7 +95,7 @@ function Products({ children, category, filters, sort }) {
             ))
           : products
               .slice(0, 8)
-              .map((item) => <Product kecd y={item._id} item={item} />)}
+              .map((item) => <Product key={item._id} item={item} />)}
       </List>
     </Container>
   );

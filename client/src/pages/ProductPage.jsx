@@ -15,7 +15,7 @@ import { useDispatch } from 'react-redux';
 
 const Container = styled.div`
   position: relative;
-  height: 110vh;
+  min-height: 100vh;
   footer {
     position: absolute;
     bottom: -6rem;
@@ -28,7 +28,7 @@ const Container = styled.div`
 `;
 
 const Wrapper = styled.div`
-  padding-top: 4rem;
+  padding-top: 5rem;
   width: 85%;
   margin: 0 auto;
 
@@ -142,6 +142,10 @@ export default function ProductPage() {
   });
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     async function getProduct() {
       try {
         const res = await publicRequest.get('/products/find/' + id);
@@ -172,7 +176,7 @@ export default function ProductPage() {
               </TextBlock>
               <TextBlock>
                 <h4>Charging time</h4>
-                <span>{product.battery}</span>
+                <span>{product.battery} min</span>
               </TextBlock>
               <TextBlock>
                 <h4>Assist speed</h4>
@@ -197,10 +201,10 @@ export default function ProductPage() {
             <b>Top Speed:</b> <br /> {product.speed} kmph
           </span>
           <span>
-            <b>Battery life:</b> <br /> {product.battery}
+            <b>Charging time:</b> <br /> {product.battery} min
           </span>
           <span>
-            <b>Front Travel:</b> <br /> {product.travel}
+            <b>Front Travel:</b> <br /> {product.travel} mm
           </span>
           <span>
             <b>Description:</b> <br /> {product.desc}

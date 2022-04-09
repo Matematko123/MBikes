@@ -6,10 +6,16 @@ import Categories from '../components/Categories/Categories';
 import Products from '../components/Products/Products';
 import AboutUs from '../components/AboutUs/AboutUs';
 import Footer from '../components/Footer/Footer';
+import styled from 'styled-components';
+
+const Home = styled.div`
+  padding-bottom: 1rem;
+  position: relative;
+`;
 
 function HomePage() {
   return (
-    <>
+    <Home>
       <Navbar></Navbar>
       <BikeSlider></BikeSlider>
       <Categories></Categories>
@@ -21,7 +27,7 @@ function HomePage() {
       />
       <AboutUs></AboutUs>
       <Footer></Footer>
-    </>
+    </Home>
   );
 }
 
