@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import SecondaryButton from 'reusable/SecondaryButton';
+
+import { login } from '../redux/apiCalls';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Container = styled.div`
   width: 100vw;
@@ -51,14 +54,36 @@ const Link = styled.a`
 `;
 
 export default function LoginPage() {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const dispatch = useDispatch();
+  const { isFetching, error } = useSelector((state) => state.user);
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    login(dispatch, { username, password });
+  };
+
   return (
     <Container>
       <Wrapper>
         <Title>SIGN IN</Title>
         <Form>
-          <Input placeholder="username" required />
-          <Input placeholder="password" required />
-          <SecondaryButton>LOGIN</SecondaryButton>
+          <Input
+            placeholder="username"
+            required
+            onChange={(e) => setUsername(e.target.value)}
+          />
+          <Input
+            placeholder="password"
+            required
+            type="password"
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <SecondaryButton onClick={handleLogin} disabled={isFetching}>
+            LOGIN
+          </SecondaryButton>
+          {error && 'Something went wrong! Try again!'}
           <Link>Forgot password?</Link>
           <Link>Don't have account?</Link>
         </Form>

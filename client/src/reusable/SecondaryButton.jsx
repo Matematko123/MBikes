@@ -17,10 +17,19 @@ const Button = styled.button`
     border: solid 2px black;
     color: black;
   }
+
+  &:disabled {
+    color: green;
+    cursor: not-allowed;
+  }
 `;
 
 function SecondaryButton(props) {
-  return <Button onClick={props.onClick}>{props.children}</Button>;
+  return (
+    <Button onClick={props.onClick} disabled={props.disabled}>
+      {props.children}
+    </Button>
+  );
 }
 
 export default SecondaryButton;

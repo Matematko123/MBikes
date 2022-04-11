@@ -11,7 +11,7 @@ import RegisterPage from 'pages/RegisterPage';
 import CartPage from 'pages/CartPage';
 
 function App() {
-  const user = true;
+  const user = false;
   return (
     <div className="App">
       <BrowserRouter>
