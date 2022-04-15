@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import SecondaryButton from 'reusable/SecondaryButton';
 
 import { login } from '../redux/apiCalls';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 const Container = styled.div`
   width: 100vw;
@@ -57,11 +58,15 @@ export default function LoginPage() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const dispatch = useDispatch();
-  const { isFetching, error } = useSelector((state) => state.user);
+  const navigate = useNavigate();
+  const { currentUser, isFetching, error } = useSelector((state) => state.user);
+
 
   const handleLogin = (e) => {
     e.preventDefault();
-    login(dispatch, { username, password });
+    login(dispatch, { username, password }, () => {
+      navigate('/admin');
+    });
   };
 
   return (

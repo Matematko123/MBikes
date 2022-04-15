@@ -9,6 +9,7 @@ import ProductPage from './pages/ProductPage';
 import LoginPage from 'pages/LoginPage';
 import RegisterPage from 'pages/RegisterPage';
 import CartPage from 'pages/CartPage';
+import AdminPage from 'pages/AdminPage';
 
 function App() {
   const user = false;
@@ -20,6 +21,7 @@ function App() {
           <Route path="/products/:category" element={<ProductListPage />} />
           <Route path="/product/:id" element={<ProductPage />} />
           <Route path="/cart" element={<CartPage />} />
+          <Route path="/admin" element={<AdminPage />} />
 
           <Route
             path="/login"

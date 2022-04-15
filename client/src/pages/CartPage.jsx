@@ -10,8 +10,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { removeProduct, clearAllProducts } from '../redux/cartRedux';
 import { HashLink as Link } from 'react-router-hash-link';
 
-import { useNavigate } from 'react-router-dom';
-
 import StripeCheckout from 'react-stripe-checkout';
 
 import { publicRequest } from '../requestMethods';
@@ -171,10 +169,9 @@ export default function CartPage() {
   const [stripeToken, setStripeToken] = useState(null);
   const [orderDone, setOrderDone] = useState(false);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   function removeItemFromCart(product) {
-    dispatch(removeProduct({ product, price: product.price }));
+    dispatch(removeProduct({ product }));
   }
 
   function onToken(token) {

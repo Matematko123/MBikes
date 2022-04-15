@@ -50,6 +50,7 @@ function Products({ children, category, filters, sort }) {
         setProducts(res.data);
       } catch (error) {}
     };
+
     getProducts();
   }, [category]);
 
@@ -94,7 +95,7 @@ function Products({ children, category, filters, sort }) {
               <Product key={item.id} item={item} />
             ))
           : products
-              .slice(0, 8)
+              .slice(0, 100)
               .map((item) => <Product key={item._id} item={item} />)}
       </List>
     </Container>
