@@ -99,7 +99,7 @@ function Navbar() {
           <Links>
             <Link to="/#Bikes">Bikes</Link>
             <Link to="/#AboutUs">About Us</Link>
-            <Link to="/login">
+            <Link to="/admin">
               <BsPersonFill />
             </Link>
             <Link to="/cart">
