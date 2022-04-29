@@ -100,7 +100,7 @@ function Navbar() {
             <Link to="/#Bikes">Bikes</Link>
             <Link to="/#AboutUs">About Us</Link>
             <Link to="/admin">
-              <BsPersonFill />
+              <BsPersonFill style={{ paddingTop: '8' }} />
             </Link>
             <Link to="/cart">
               <Badge className="badge" badgeContent={quantity} color="primary">

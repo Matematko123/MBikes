@@ -61,7 +61,6 @@ export default function LoginPage() {
   const navigate = useNavigate();
   const { currentUser, isFetching, error } = useSelector((state) => state.user);
 
-
   const handleLogin = (e) => {
     e.preventDefault();
     login(dispatch, { username, password }, () => {
@@ -89,8 +88,6 @@ export default function LoginPage() {
             LOGIN
           </SecondaryButton>
           {error && 'Something went wrong! Try again!'}
-          <Link>Forgot password?</Link>
-          <Link>Don't have account?</Link>
         </Form>
       </Wrapper>
     </Container>

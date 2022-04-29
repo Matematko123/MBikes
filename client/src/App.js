@@ -10,11 +10,18 @@ import LoginPage from 'pages/LoginPage';
 import RegisterPage from 'pages/RegisterPage';
 import CartPage from 'pages/CartPage';
 import AdminPage from 'pages/AdminPage';
+import { useDispatch } from 'react-redux';
 
 import { useSelector } from 'react-redux';
+import { clearState } from './redux/userRedux';
 
 function App() {
+  // @ts-ignore
   const user = useSelector((state) => state.user.currentUser);
+
+  const dispatch = useDispatch();
+  //dispatch(clearState());
+
   return (
     <div className="App">
       <BrowserRouter>
@@ -25,13 +32,18 @@ function App() {
           <Route path="/cart" element={<CartPage />} />
           <Route
             path="/admin"
-            element={user ? <AdminPage /> : <Navigate to="/login" replace />}
+            element={
+              // @ts-ignore
+              user.isAdmin ? <AdminPage /> : <Navigate to="/login" replace />
+            }
           />
 
           <Route path="/login" element={<LoginPage />} />
           <Route
             path="/register"
-            element={user ? <Navigate to="/" replace /> : <RegisterPage />}
+            element={
+              user.length ? <Navigate to="/" replace /> : <RegisterPage />
+            }
           />
         </Routes>
       </BrowserRouter>

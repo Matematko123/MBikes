@@ -164,7 +164,7 @@ function AdminPage() {
     // if (!auth.currentUser.isAdmin) {
     //   navigate('/login');
     // }
-    // dispatch(clearState());
+    //dispatch(clearState());
   }, []);
 
   const handleChange = (e) => {
