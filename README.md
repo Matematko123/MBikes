@@ -11,7 +11,6 @@ Bike store app using MERN stack
 
 <h2> FRONTEND </h2> 
 <ul>
-  <li> Context api  </li>
   <li> Routing </li>
   <li> Cart page </li>
   <li> Redux for state managment </li>
