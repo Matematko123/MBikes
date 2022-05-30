@@ -19,4 +19,8 @@ Bike store app using MERN stack
   <li> Add to cart </li>
   <li> Stripe api for payment </li>
 </ul>
+<br/>
 <img src="https://user-images.githubusercontent.com/99608089/170979108-8304b22f-b1ff-4317-be1c-a79986acbc2f.png">
+<br/>
+<img src="https://user-images.githubusercontent.com/99608089/170979349-ba842b70-ee5d-4cb6-8430-2fa17f870a6b.png">
+
